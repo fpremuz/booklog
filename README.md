@@ -1,24 +1,42 @@
-# README
+# Booklog 📚
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+Booklog is a simple Ruby on Rails application for tracking books you've read and building a wishlist of books you want to read.
 
-Things you may want to cover:
+You can add books with details like title, author, description, rating, and status (read or wishlist). The project is designed to be lightweight, responsive (TailwindCSS), and expandable with features like filters, tags, and reading goals.
 
-* Ruby version
+## Features
 
-* System dependencies
+- 📖 Add books you've read with:
+  - Title
+  - Author
+  - Description/Notes
+  - Rating (1–5 stars)
+  - Status (Read / Wishlist)
 
-* Configuration
+- 🌟 Wishlist for books you plan to read
+- 🎨 Responsive UI with TailwindCSS
+- ⚡ Built-in support for Turbo and Stimulus (Hotwire)
 
-* Database creation
+## Tech Stack
 
-* Database initialization
+- Ruby on Rails 7
+- PostgreSQL
+- TailwindCSS
+- Hotwire (Turbo + Stimulus)
+- Importmap (no Node.js or Webpack required)
 
-* How to run the test suite
+## Getting Started
 
-* Services (job queues, cache servers, search engines, etc.)
+### Prerequisites
 
-* Deployment instructions
+- Ruby 3.1+
+- Rails 7+
+- PostgreSQL
 
-* ...
+### Setup
+
+Clone the repository:
+
+```bash
+git clone https://github.com/your-username/booklog.git
+cd booklog
