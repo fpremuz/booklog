@@ -12,6 +12,14 @@
         <% if book.description.present? %>
           <p class="text-gray-600 text-sm mb-4"><%= truncate(book.description, length: 100) %></p>
         <% end %>
+
+        <p class="text-sm text-gray-500 italic mb-2">
+          <% if book.status.present? %>
+            Status: <%= book.status.titleize %>
+          <% else %>
+            Status: Not set
+          <% end %>
+        </p>
       </div>
 
       <div class="mt-4 flex justify-between items-center text-sm text-gray-500">

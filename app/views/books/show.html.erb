@@ -2,11 +2,14 @@
   <div class="bg-white p-6 rounded-lg shadow-md">
     <h1 class="text-3xl font-bold mb-4 text-center"><%= @book.title %></h1>
 
-    <% if @book.description.present? %>
-        <p class="text-gray-700 mb-6 whitespace-pre-line"><%= @book.description %></p>
-    <% else %>
-        <p class="text-gray-400 italic mb-6">No description available.</p>
-    <% end %>
+    <p class="mb-4">
+      <strong>Description:</strong><br>
+      <%= @book.description.presence || "No description provided." %>
+    </p>
+
+    <p class="mb-4">
+      <strong>Status:</strong> <%= @book.status&.titleize || "Not set" %>
+    </p>
 
     <div class="flex justify-center space-x-6 mt-6">
       <%= link_to "Back", books_path, class: "inline-block bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400" %>
