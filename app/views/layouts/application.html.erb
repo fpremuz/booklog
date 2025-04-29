@@ -23,6 +23,18 @@
   </head>
 
   <body class="bg-gray-100 min-h-screen">
+    <nav class="bg-white shadow-md mb-8">
+      <div class="px-4 py-4 flex items-center">
+        <div class="text-lg font-semibold">
+          <%= link_to "Booklog", root_path, class: "text-gray-800 hover:text-gray-600" %>
+        </div>
+        <div class="ml-auto">
+          <%= link_to "Home", root_path, class: "text-gray-600 hover:text-gray-800 mr-6" %>
+          <%= link_to "Books", books_path, class: "text-gray-600 hover:text-gray-800" %>
+        </div>
+      </div>
+    </nav>
+
     <% flash.each do |key, message| %>
       <div class="p-4 mb-4 rounded text-white
                   <%= key == "notice" ? "bg-green-500" : "bg-red-500" %>">
