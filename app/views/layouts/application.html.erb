@@ -22,9 +22,14 @@
     <%= javascript_importmap_tags %>
   </head>
 
-  <body>
-    <main class="container mx-auto mt-28 px-5 flex">
-      <%= yield %>
-    </main>
+  <body class="bg-gray-100 min-h-screen">
+    <% flash.each do |key, message| %>
+      <div class="p-4 mb-4 rounded text-white
+                  <%= key == "notice" ? "bg-green-500" : "bg-red-500" %>">
+        <%= message %>
+      </div>
+    <% end %>
+
+    <%= yield %>
   </body>
 </html>

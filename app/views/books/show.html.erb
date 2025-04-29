@@ -1,4 +1,11 @@
-<div>
-  <h1 class="font-bold text-4xl">Books#show</h1>
-  <p>Find me in app/views/books/show.html.erb</p>
+<div class="max-w-3xl mx-auto px-4">
+  <div class="bg-white p-6 rounded-lg shadow-md">
+    <h1 class="text-3xl font-bold mb-4 text-center"><%= @book.title %></h1>
+
+    <div class="flex justify-center space-x-6 mt-6">
+      <%= link_to "Back", books_path, class: "inline-block bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400" %>
+      <%= link_to "Edit", edit_book_path(@book), class: "inline-block bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-600" %>
+      <%= button_to "Delete", @book, method: :delete, data: { turbo_confirm: "Are you sure?" }, class: "inline-block bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" %>
+    </div>
+  </div>
 </div>

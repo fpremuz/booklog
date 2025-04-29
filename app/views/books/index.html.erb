@@ -1,4 +1,15 @@
-<div>
-  <h1 class="font-bold text-4xl">Books#index</h1>
-  <p>Find me in app/views/books/index.html.erb</p>
+<div class="max-w-7xl mx-auto px-4">
+  <div class="flex items-center justify-between mb-6">
+    <h1 class="text-3xl font-bold">Books</h1>
+
+    <%= link_to "New Book", new_book_path, class: "inline-flex items-center px-4 py-2 bg-green-600 border border-transparent rounded-md font-semibold text-white hover:bg-green-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-green-500" %>
+  </div>
+
+  <div id="books" class="grid gap-4 grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
+    <% @books.each do |book| %>
+      <div class="p-4 border rounded-lg shadow hover:shadow-lg hover:bg-gray-50 bg-white transition">
+        <%= link_to book.title, book, class: "text-lg font-semibold text-indigo-600 hover:underline" %>
+      </div>
+    <% end %>
+  </div>
 </div>
