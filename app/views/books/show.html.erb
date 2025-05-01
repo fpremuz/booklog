@@ -11,6 +11,14 @@
       <strong>Status:</strong> <%= @book.status&.titleize || "Not set" %>
     </p>
 
+    <% if @book.cover_image.attached? %>
+      <div class="mt-6 text-center">
+        <%= image_tag @book.cover_image, class: "rounded shadow-md mt-2" %>
+      </div>
+    <% else %>
+      <p class="text-center text-gray-500 italic mt-4">No cover image uploaded.</p>
+    <% end %>
+
     <div class="flex justify-center space-x-6 mt-6">
       <%= link_to "Back", books_path, class: "inline-block bg-gray-300 text-gray-800 px-4 py-2 rounded hover:bg-gray-400" %>
       <%= link_to "Edit", edit_book_path(@book), class: "inline-block bg-indigo-500 text-white px-4 py-2 rounded hover:bg-indigo-600" %>

@@ -7,6 +7,14 @@
   <% @books.each do |book| %>
     <div class="bg-white p-6 rounded-lg shadow-md flex flex-col justify-between h-full">
       <div>
+        <% if book.cover_image.attached? %>
+          <%= image_tag book.cover_image, class: "rounded shadow-md mt-2" %>
+        <% else %>
+          <div class="mb-4 bg-gray-100 text-gray-500 italic text-center py-12 rounded">
+            No image
+          </div>
+        <% end %>
+
         <h2 class="text-xl font-bold mb-2"><%= book.title %></h2>
 
         <% if book.description.present? %>
