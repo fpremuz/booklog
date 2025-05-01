@@ -6,11 +6,11 @@ default: &default
 
 development:
   <<: *default
-  database: booklog_development
+  url: <%= ENV["DATABASE_URL"] %>
 
 test:
   <<: *default
-  database: booklog_test
+  url: <%= ENV["DATABASE_URL"] %>
 
 production:
   url: <%= ENV["DATABASE_URL"] %>
