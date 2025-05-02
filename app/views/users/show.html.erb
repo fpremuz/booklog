@@ -1,4 +1,15 @@
-<div>
-  <h1 class="font-bold text-4xl">Users#show</h1>
-  <p>Find me in app/views/users/show.html.erb</p>
+<div class="min-h-screen flex items-start justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold text-center mb-6">Your Profile</h1>
+
+    <div class="mb-6">
+      <p class="text-gray-700"><span class="font-medium">Email:</span> <%= @user.email %></p>
+    </div>
+
+    <div class="flex justify-between items-center">
+      <%= link_to "Edit Profile", edit_user_path(@user), class: "inline-block text-sm bg-indigo-600 text-white py-2 px-4 rounded hover:bg-indigo-700 transition" %>
+
+      <%= link_to "Back to Books", books_path, class: "text-sm text-gray-500 hover:text-gray-700 underline" %>
+    </div>
+  </div>
 </div>

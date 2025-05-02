@@ -1,0 +1,35 @@
+<div class="min-h-screen flex items-start justify-center bg-gray-50 py-12 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold text-center mb-6">Edit Profile</h1>
+
+    <%= form_with(model: @user, local: true) do |form| %>
+      <% if @user.errors.any? %>
+        <div class="mb-4 p-4 bg-red-100 text-red-700 rounded">
+          <h2 class="font-semibold">Please fix the following errors:</h2>
+          <ul class="list-disc ml-5">
+            <% @user.errors.full_messages.each do |message| %>
+              <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+      <% end %>
+
+      <div class="mb-4">
+        <%= form.label :email, class: "block text-gray-700 font-medium" %>
+        <%= form.email_field :email, class: "w-full mt-1 p-2 border rounded-md shadow-sm focus:ring focus:ring-indigo-200" %>
+      </div>
+
+      <div class="mb-4">
+        <%= form.label :password, "New Password (leave blank to keep current)", class: "block text-gray-700 font-medium" %>
+        <%= form.password_field :password, class: "w-full mt-1 p-2 border rounded-md shadow-sm focus:ring focus:ring-indigo-200", autocomplete: "new-password" %>
+      </div>
+
+      <div class="mb-6">
+        <%= form.label :password_confirmation, "Confirm New Password", class: "block text-gray-700 font-medium" %>
+        <%= form.password_field :password_confirmation, class: "w-full mt-1 p-2 border rounded-md shadow-sm focus:ring focus:ring-indigo-200" %>
+      </div>
+
+      <%= form.submit "Update Profile", class: "w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 transition" %>
+    <% end %>
+  </div>
+</div>

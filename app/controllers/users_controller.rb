@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   allow_unauthenticated_access only: %i[new create]
+  before_action :set_user, only: [:edit, :update]
 
   def new
     @user = User.new
@@ -18,12 +19,27 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = Current.session.user
+  end
+
+  def edit
+  end
+
+  def update
+    if @user.update(user_params)
+      redirect_to @user, notice: 'Profile updated successfully.'
+    else
+      render :edit
+    end
   end
 
   private
     def user_params
       params.require(:user).permit(:email, :password, :password_confirmation)
+    end
+
+    def set_user
+      @user = Current.session.user
     end
 
 end

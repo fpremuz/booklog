@@ -5,7 +5,7 @@ Rails.application.routes.draw do
   resource :session
   resources :passwords, param: :token
   resources :books
-  resources :users, only: [:new, :create, :show]
+  resources :users, only: [:new, :create, :show, :edit, :update]
 
   get "/login", to: "sessions#new", as: :login
   post "/login", to: "sessions#create"

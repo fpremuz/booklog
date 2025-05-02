@@ -40,8 +40,13 @@
             <% end %>
           </div>
 
-          <% if Current.session&.user.present? %>
-            <p class="text-xs text-green-600">Logged in as <%= Current.session.user.email %></p>
+          <% if authenticated? %>
+            <p class="text-xs text-green-600">
+              Logged in as
+              <a href="/users/<%= Current.session.user.id %>" class="text-gray-600 hover:text-gray-800 underline hover:underline">
+                <%= Current.session.user.email %>
+              </a>
+            </p>
           <% else %>
             <p class="text-xs text-red-600">Not logged in</p>
           <% end %>
