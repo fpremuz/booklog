@@ -19,12 +19,12 @@
 
     <%= form_with url: session_url, class: "space-y-6", local: true do |form| %>
       <div>
-        <%= form.label :email_address, "Email address", class: "block text-sm font-medium text-gray-700" %>
-        <%= form.email_field :email_address,
+        <%= form.label :email, "Email address", class: "block text-sm font-medium text-gray-700" %>
+        <%= form.email_field :email,
           required: true,
           autofocus: true,
           autocomplete: "username",
-          value: params[:email_address],
+          value: params[:email],
           placeholder: "you@example.com",
           class: "mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-blue-500 focus:border-blue-500 sm:text-sm" %>
       </div>

@@ -41,7 +41,7 @@
           </div>
 
           <% if Current.session&.user.present? %>
-            <p class="text-xs text-green-600">Logged in as <%= Current.session.user.email_address %></p>
+            <p class="text-xs text-green-600">Logged in as <%= Current.session.user.email %></p>
           <% else %>
             <p class="text-xs text-red-600">Not logged in</p>
           <% end %>
