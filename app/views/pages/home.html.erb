@@ -1,0 +1,17 @@
+<div class="min-h-screen flex items-center justify-center bg-white px-4 py-24 sm:px-6 lg:px-8">
+  <div class="text-center">
+    <h1 class="text-4xl font-extrabold text-gray-900 sm:text-5xl">Welcome to BookLog</h1>
+    <p class="mt-4 text-lg text-gray-600">Track what you've read, rate books, and grow your reading list.</p>
+
+    <% if authenticated? %>
+      <div class="mt-6">
+        <%= link_to "Go to Your Books", books_path, class: "inline-block px-6 py-3 bg-indigo-600 text-white text-sm font-medium rounded hover:bg-indigo-700 transition" %>
+      </div>
+    <% else %>
+      <div class="mt-6 space-x-4">
+        <%= link_to "Sign In", signin_path, class: "px-6 py-2 text-sm font-medium text-indigo-600 hover:underline" %>
+        <%= link_to "Sign Up", new_user_path, class: "px-6 py-2 text-sm font-medium text-white bg-indigo-600 rounded hover:bg-indigo-700" %>
+      </div>
+    <% end %>
+  </div>
+</div>

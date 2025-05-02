@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "pages/home"
   get "users/new"
   get "users/create"
   get "users/show"
@@ -11,5 +12,5 @@ Rails.application.routes.draw do
   post "/login", to: "sessions#create"
   delete "/logout", to: "sessions#destroy", as: :logout
 
-  root "books#index"
+  root "pages#home"
 end
