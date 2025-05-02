@@ -1,5 +1,6 @@
 class BooksController < ApplicationController
   before_action :set_book, only: %i[ show edit update destroy ]
+  allow_unauthenticated_access only: %i[ index show ]
 
   def index
     @books = Book.all
@@ -45,5 +46,11 @@ class BooksController < ApplicationController
 
     def book_params
       params.require(:book).permit(:title, :description, :status, :cover_image)
+    end
+
+    def require_login
+      unless Current.session&.user
+        redirect_to login_path, alert: "You must be logged in to access this section."
+      end
     end
 end
