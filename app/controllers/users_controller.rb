@@ -9,8 +9,10 @@ class UsersController < ApplicationController
     @user = User.new(user_params)
     if @user.save
       start_new_session_for(@user) 
+      puts @user.errors.full_messages
       redirect_to books_path, notice: "Account created successfully!"
     else
+      puts @user.errors.full_messages
       render :new, status: :unprocessable_entity
     end
   end
