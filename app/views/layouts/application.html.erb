@@ -33,7 +33,7 @@
             <%= link_to "Home", root_path, class: "text-gray-600 hover:text-gray-800" %>
             <%= link_to "Books", books_path, class: "text-gray-600 hover:text-gray-800" %>
 
-            <% if Current.session&.user.present? %>
+            <% if authenticated? %>
               <%= button_to "Log out", logout_path, method: :delete, class: "bg-red-500 text-white px-4 py-2 rounded hover:bg-red-600" %>
             <% else %>
               <%= link_to "Log in", login_path, class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" %>
