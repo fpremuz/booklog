@@ -10,6 +10,9 @@ class BooksController < ApplicationController
         q = "%#{params[:query]}%"
         @books = @books.where("title ILIKE ? OR description ILIKE ?", q, q)
       end
+      if params[:status].present?
+        @books = @books.where(status: params[:status])
+      end
     else
       @books = Book.none
     end

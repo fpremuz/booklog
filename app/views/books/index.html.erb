@@ -9,7 +9,9 @@
   <div class="mb-4">
     <%= label_tag :query, "Search Books" %>
     <%= text_field_tag :query, params[:query], placeholder: "Search by title or description", class: "border px-2 py-1" %>
+    <%= select_tag :status, options_for_select(Book::STATUS_OPTIONS.map(&:reverse), params[:status]), include_blank: "All Statuses", class: "border px-2 py-1" %>
     <%= submit_tag "Search", class: "ml-2 bg-blue-500 text-white px-3 py-1 rounded" %>
+    <%= link_to "Reset Filters", books_path, class: "bg-gray-300 text-black px-3 py-1 rounded" %>
   </div>
 <% end %>
 
