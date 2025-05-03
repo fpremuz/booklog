@@ -1,8 +1,14 @@
 class BooksController < ApplicationController
+  before_action :require_login
   before_action :set_book, only: %i[ show edit update destroy ]
+  before_action :authorize_book!, only: %i[edit update destroy]
 
   def index
-    @books = Book.all
+    if Current.session&.user
+      @books = Current.session.user.books
+    else
+      @books = Book.none
+    end
   end
 
   def show
@@ -13,7 +19,7 @@ class BooksController < ApplicationController
   end
 
   def create
-    @book = Book.new(book_params)
+    @book = Current.session.user.books.build(book_params)
     if @book.save
       flash[:notice] = "Book created successfully"
       redirect_to @book
@@ -45,5 +51,15 @@ class BooksController < ApplicationController
 
     def book_params
       params.require(:book).permit(:title, :description, :status, :cover_image)
+    end
+
+    def require_login
+      unless Current.session&.user
+        redirect_to login_path, alert: "You must be logged in to access this section."
+      end
+    end
+
+    def authorize_book!
+      redirect_to books_path, alert: "Not authorized." unless @book.user == Current.session.user
     end
 end
