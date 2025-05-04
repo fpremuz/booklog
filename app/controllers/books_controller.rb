@@ -36,42 +36,52 @@ class BooksController < ApplicationController
   end
 
   def create
-  @book = Current.session.user.books.build(book_params)
-
-  if @book.pages_read.present? && @book.total_pages.present? && book.total_pages > 0
-    if @book.pages_read >= @book.total_pages
-      @book.status = "read"
-    elsif @book.pages_read > 0
-      @book.status = "reading"
+    @book = Current.session.user.books.build(book_params)
+  
+    pages = @book.pages_read || 0
+    total = @book.total_pages
+  
+    if total.present? && total > 0
+      @book.status = if pages >= total
+        "read"
+      elsif pages > 0
+        "reading"
+      else
+        "to_read"
+      end
     else
-      @book.status = "to_read"
+      @book.status = pages > 0 ? "reading" : "to_read"
     end
-  else
-    @book.status = "to_read"
+  
+    if @book.save
+      flash[:notice] = "Book created successfully"
+      redirect_to @book
+    else
+      render :new, status: :unprocessable_entity
+    end
   end
-
-  if @book.save
-    flash[:notice] = "Book created successfully"
-    redirect_to @book
-  else
-    render :new, status: :unprocessable_entity
-  end
-end
 
   def edit
   end
 
   def update
     if @book.update(book_params)
-      if @book.pages_read.present? && @book.total_pages.present? && book.total_pages > 0
-        if @book.pages_read >= @book.total_pages
-          @book.update_column(:status, "read")
-        elsif @book.pages_read > 0
-          @book.update_column(:status, "reading")
+      pages = @book.pages_read || 0
+      total = @book.total_pages
+  
+      new_status = if total.present? && total > 0
+        if pages >= total
+          "read"
+        elsif pages > 0
+          "reading"
         else
-          @book.update_column(:status, "to_read")
+          "to_read"
         end
+      else
+        pages > 0 ? "reading" : "to_read"
       end
+  
+      @book.update_column(:status, new_status)
   
       redirect_to @book
     else
@@ -90,7 +100,18 @@ end
     total = @book.total_pages
   
     @book.pages_read = pages
-    @book.status = (pages >= total) ? "read" : "reading"
+  
+    if total.present? && total > 0
+      if pages >= total
+        @book.status = "read"
+      elsif pages > 0
+        @book.status = "reading"
+      else
+        @book.status = "to_read"
+      end
+    else
+      @book.status = pages > 0 ? "reading" : "to_read"
+    end
   
     if @book.save
       redirect_to @book, notice: "Progress updated."

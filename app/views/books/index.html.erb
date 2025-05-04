@@ -66,13 +66,27 @@
           <p class="text-gray-600 text-sm mb-4"><%= truncate(book.description, length: 100) %></p>
         <% end %>
 
-        <p class="text-sm text-gray-500 italic mb-2">
-          <% if book.status.present? %>
-            Status: <%= book.status.titleize %>
-          <% else %>
-            Status: Not set
-          <% end %>
-        </p>
+         <% if book.status.present? %>
+          <% status_class = case book.status
+            when "read"
+              "bg-green-100 text-green-800"
+            when "reading"
+              "bg-yellow-100 text-yellow-800"
+            when "to_read"
+              "bg-gray-100 text-gray-800"
+            else
+              "bg-gray-200 text-gray-600"
+          end %>
+
+          <p class="text-sm text-gray-600 italic mb-2">
+            Status:
+            <span class="inline-block ml-1 px-3 py-1 rounded-full text-xs font-bold <%= status_class %>">
+              <%= book.status.humanize %>
+            </span>
+          </p>
+        <% else %>
+          <p class="text-sm text-gray-500 italic mb-2">Status: Not set</p>
+        <% end %>
 
         <p><strong>Rating:</strong>
           <% if book.rating.present? %>
