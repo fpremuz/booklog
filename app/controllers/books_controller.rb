@@ -36,23 +36,43 @@ class BooksController < ApplicationController
   end
 
   def create
-    @book = Current.session.user.books.build(book_params)
-    if @book.save
-      flash[:notice] = "Book created successfully"
-      redirect_to @book
+  @book = Current.session.user.books.build(book_params)
+
+  if @book.pages_read.present? && @book.total_pages.present? && book.total_pages > 0
+    if @book.pages_read >= @book.total_pages
+      @book.status = "read"
+    elsif @book.pages_read > 0
+      @book.status = "reading"
     else
-      render :new, status: :unprocessable_entity
+      @book.status = "to_read"
     end
+  else
+    @book.status = "to_read"
   end
+
+  if @book.save
+    flash[:notice] = "Book created successfully"
+    redirect_to @book
+  else
+    render :new, status: :unprocessable_entity
+  end
+end
 
   def edit
   end
 
   def update
     if @book.update(book_params)
-      if @book.pages_read == @book.total_pages && @book.status != "read"
-        @book.update(status: "read", finish_date: Date.today)
+      if @book.pages_read.present? && @book.total_pages.present? && book.total_pages > 0
+        if @book.pages_read >= @book.total_pages
+          @book.update_column(:status, "read")
+        elsif @book.pages_read > 0
+          @book.update_column(:status, "reading")
+        else
+          @book.update_column(:status, "to_read")
+        end
       end
+  
       redirect_to @book
     else
       render :edit, status: :unprocessable_entity
@@ -67,14 +87,15 @@ class BooksController < ApplicationController
   def update_progress
     @book = Book.find(params[:id])
     pages = params[:book][:pages_read].to_i
+    total = @book.total_pages
   
     @book.pages_read = pages
-    @book.status = "read" if @book.total_pages.present? && pages >= @book.total_pages
+    @book.status = (pages >= total) ? "read" : "reading"
   
     if @book.save
-      redirect_to @book, notice: "Progress updated!"
+      redirect_to @book, notice: "Progress updated."
     else
-      redirect_to @book, alert: "Could not update progress."
+      render :edit, status: :unprocessable_entity
     end
   end
 
