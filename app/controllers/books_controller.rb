@@ -6,16 +6,24 @@ class BooksController < ApplicationController
   def index
     if Current.session&.user
       @books = Current.session.user.books
+
       if params[:query].present?
         q = "%#{params[:query]}%"
         @books = @books.where("title ILIKE ? OR description ILIKE ?", q, q)
       end
+
       if params[:status].present?
         @books = @books.where(status: params[:status])
       end
+
       if params[:rating].present?
         @books = @books.where(rating: params[:rating])
       end
+
+      if params[:rating_filter].present?
+        @books = @books.where("rating >= ?", params[:rating_filter].to_i)
+      end
+      
     else
       @books = Book.none
     end
