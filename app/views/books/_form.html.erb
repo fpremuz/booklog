@@ -13,6 +13,8 @@
         { prompt: "Select a status" }, 
         class: "w-full border border-gray-300 rounded px-4 py-2"
     %>
+    <%= label_tag :rating, "Rating (1 to 5)" %>
+    <%= number_field_tag "book[rating]", @book.rating, in: 1..5, class: "border px-2 py-1", step: 1 %>
     <%= form.label :cover_image, "Cover Image", class: "block text-sm font-medium text-gray-700" %> 
     <%= form.file_field :cover_image, class: "mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-gray-50 focus:outline-none", accept: "image/*" %>
     <% @book.errors[:status].each do |message| %>

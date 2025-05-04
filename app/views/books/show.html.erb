@@ -11,6 +11,8 @@
       <strong>Status:</strong> <%= @book.status&.titleize || "Not set" %>
     </p>
 
+    <p><strong>Rating:</strong> <%= @book.rating || "Not rated" %></p>
+
     <% if @book.cover_image.attached? %>
       <div class="mt-6 text-center">
         <%= image_tag @book.cover_image, class: "rounded shadow-md mt-2" %>

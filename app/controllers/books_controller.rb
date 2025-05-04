@@ -13,6 +13,9 @@ class BooksController < ApplicationController
       if params[:status].present?
         @books = @books.where(status: params[:status])
       end
+      if params[:rating].present?
+        @books = @books.where(rating: params[:rating])
+      end
     else
       @books = Book.none
     end
