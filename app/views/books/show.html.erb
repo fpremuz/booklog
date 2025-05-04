@@ -11,7 +11,18 @@
       <strong>Status:</strong> <%= @book.status&.titleize || "Not set" %>
     </p>
 
-    <p><strong>Rating:</strong> <%= @book.rating || "Not rated" %></p>
+    <p class="mb-4">
+      <strong>Rating:</strong>
+      <% if @book.rating.present? %>
+        <% 1.upto(5) do |star| %>
+          <span class="text-yellow-400 text-xl">
+            <%= star <= @book.rating ? "★" : "☆" %>
+          </span>
+        <% end %>
+      <% else %>
+        <span class="text-gray-500 italic">Not rated</span>
+      <% end %>
+    </p>
 
     <% if @book.cover_image.attached? %>
       <div class="mt-6 text-center">

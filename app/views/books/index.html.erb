@@ -53,6 +53,18 @@
             Status: Not set
           <% end %>
         </p>
+
+        <p><strong>Rating:</strong>
+          <% if book.rating.present? %>
+            <% 1.upto(5) do |star| %>
+              <span class="text-yellow-400 text-xl">
+                <%= star <= (book.rating || 0) ? "★" : "☆" %>
+              </span>
+            <% end %>
+          <% else %>
+            Not rated
+          <% end %>
+        </p>
       </div>
 
       <div class="mt-4 flex justify-between items-center text-sm text-gray-500">
