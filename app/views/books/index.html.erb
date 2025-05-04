@@ -85,6 +85,21 @@
             Not rated
           <% end %>
         </p>
+        
+        <% if book.total_pages.present? && book.total_pages > 0 %>
+          <% progress = ((book.pages_read.to_f / book.total_pages) * 100).round %>
+          <p class="text-sm text-gray-600">📘 <%= progress %>% completed</p>
+
+          <div class="w-full bg-gray-200 rounded-full h-2 mt-1 mb-2">
+            <div class="bg-blue-500 h-2 rounded-full" style="width: <%= progress %>%"></div>
+          </div>
+        <% end %>
+
+        <% if book.status == "read" %>
+          <span class="text-green-600 font-semibold">✅ Completed</span>
+        <% else %>
+          <span class="text-yellow-600 font-semibold">⏳ In Progress</span>
+        <% end %>
       </div>
 
       <div class="mt-4 flex justify-between items-center text-sm text-gray-500">
