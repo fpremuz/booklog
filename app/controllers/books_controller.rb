@@ -6,14 +6,13 @@ class BooksController < ApplicationController
   def index
     if Current.session&.user
       @books = Current.session.user.books
-      @books = Book.page(params[:page]).per(3)
   
       @books = @books.search(params[:query]) if params[:query].present?
       @books = @books.with_status(params[:status]) if params[:status].present?
       @books = @books.with_rating(params[:rating]) if params[:rating].present?
       @books = @books.rating_above(params[:rating_filter]) if params[:rating_filter].present?
       @books = @books.with_tags(params[:tags_list]) if params[:tags_list].present?
-      @books = @books.page(params[:page]).per(3)
+      @books = @books.page(params[:page]).per(12)
     else
       @books = Book.none
     end
