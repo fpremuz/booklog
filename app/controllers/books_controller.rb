@@ -25,11 +25,8 @@ class BooksController < ApplicationController
       end
   
       if params[:tags_list].present?
-        tag_names = params[:tags_list] 
-        @books = @books.joins(:tags).where(tags: { name: tag_names }).distinct
-      elsif params[:tags].present?
-        tag_names = params[:tags].split(",").map(&:strip)
-        @books = @books.joins(:tags).where(tags: { name: tag_names }).distinct
+        tag_names = params[:tags_list]
+        @books = @books.joins(:tags).where("tags.name ILIKE ANY (ARRAY[?])", tag_names.map { |tag| "%#{tag}%" }).distinct
       end
     else
       @books = Book.none
