@@ -6,6 +6,7 @@ class BooksController < ApplicationController
   def index
     if Current.session&.user
       @books = Current.session.user.books
+      @books = Book.page(params[:page]).per(3)
   
       if params[:query].present?
         q = "%#{params[:query]}%"
