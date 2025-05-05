@@ -3,6 +3,11 @@
     <h1 class="text-3xl font-bold mb-4 text-center"><%= @book.title %></h1>
 
     <p class="mb-4">
+      <strong>Author:</strong><br>
+      <%= @book.author.presence || "No author provided." %>
+    </p>
+
+    <p class="mb-4">
       <strong>Description:</strong><br>
       <%= @book.description.presence || "No description provided." %>
     </p>
