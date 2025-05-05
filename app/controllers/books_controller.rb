@@ -6,26 +6,30 @@ class BooksController < ApplicationController
   def index
     if Current.session&.user
       @books = Current.session.user.books
-
+  
       if params[:query].present?
         q = "%#{params[:query]}%"
         @books = @books.where("title ILIKE ? OR description ILIKE ?", q, q)
       end
-
+  
       if params[:status].present?
         @books = @books.where(status: params[:status])
       end
-
+  
       if params[:rating].present?
         @books = @books.where(rating: params[:rating])
       end
-
+  
       if params[:rating_filter].present?
         @books = @books.where("rating >= ?", params[:rating_filter].to_i)
       end
-
-      if params[:tag].present?
-        @books = @books.where("tags ILIKE ?", "%#{params[:tag]}%")
+  
+      if params[:tags_list].present?
+        tag_names = params[:tags_list] 
+        @books = @books.joins(:tags).where(tags: { name: tag_names }).distinct
+      elsif params[:tags].present?
+        tag_names = params[:tags].split(",").map(&:strip)
+        @books = @books.joins(:tags).where(tags: { name: tag_names }).distinct
       end
     else
       @books = Book.none
@@ -58,6 +62,7 @@ class BooksController < ApplicationController
     end
   
     if @book.save
+      update_tags(@book, params[:tag_names])
       flash[:notice] = "Book created successfully"
       redirect_to @book
     else
@@ -86,6 +91,7 @@ class BooksController < ApplicationController
       end
   
       @book.update_column(:status, new_status)
+      update_tags(@book, params[:tag_names])
   
       redirect_to @book
     else
@@ -142,4 +148,10 @@ class BooksController < ApplicationController
     def authorize_book!
       redirect_to books_path, alert: "Not authorized." unless @book.user == Current.session.user
     end    
+
+    def update_tags(book, tag_names)
+      tags_list = tag_names.to_s.split(",").map(&:strip).reject(&:blank?).uniq
+      tags = tags_list.map { |name| Tag.find_or_create_by(name: name.downcase) }
+      book.tags = tags
+    end
 end

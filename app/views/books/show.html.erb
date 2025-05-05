@@ -68,6 +68,13 @@
       <%= render "add_progress_form", book: @book %>
     <% end %>
 
+    <p class="text-sm text-gray-600">
+      <strong>Tags:</strong>
+      <% @book.tags.each do |tag| %>
+        <%= link_to tag.name.titleize, books_path(tag: tag.name), class: "text-blue-600 hover:underline mr-2" %>
+      <% end %>
+    </p>
+
     <% if @book.cover_image.attached? %>
       <div class="mt-6 text-center">
         <%= image_tag @book.cover_image, class: "rounded shadow-md mt-2" %>

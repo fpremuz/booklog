@@ -1,0 +1,82 @@
+<div class="bg-white p-6 rounded-lg shadow-md flex flex-col justify-between h-full">
+  <div>
+    <% if book.cover_image.attached? %>
+      <%= image_tag book.cover_image, class: "rounded shadow-md mt-2" %>
+    <% else %>
+      <div class="mb-4 bg-gray-100 text-gray-500 italic text-center py-12 rounded">
+        No image
+      </div>
+    <% end %>
+
+    <h2 class="text-xl font-bold mb-2"><%= book.title %></h2>
+
+    <% if book.description.present? %>
+      <p class="text-gray-600 text-sm mb-4"><%= truncate(book.description, length: 100) %></p>
+    <% end %>
+
+    <% if book.status.present? %>
+      <% status_class = case book.status
+        when "read"
+          "bg-green-100 text-green-800"
+        when "reading"
+          "bg-yellow-100 text-yellow-800"
+        when "to_read"
+          "bg-gray-100 text-gray-800"
+        else
+          "bg-gray-200 text-gray-600"
+      end %>
+
+      <p class="text-sm text-gray-600 italic mb-2">
+        Status:
+        <span class="inline-block ml-1 px-3 py-1 rounded-full text-xs font-bold <%= status_class %>">
+          <%= book.status.humanize %>
+        </span>
+      </p>
+    <% else %>
+      <p class="text-sm text-gray-500 italic mb-2">Status: Not set</p>
+    <% end %>
+
+    <p><strong>Rating:</strong>
+      <% if book.rating.present? %>
+        <% 1.upto(5) do |star| %>
+          <span class="text-yellow-400 text-xl">
+            <%= star <= (book.rating || 0) ? "★" : "☆" %>
+          </span>
+        <% end %>
+      <% else %>
+        Not rated
+      <% end %>
+    </p>
+    
+    <% if book.total_pages.present? && book.total_pages > 0 %>
+      <% progress = ((book.pages_read.to_f / book.total_pages) * 100).round %>
+      <p class="text-sm text-gray-600">📘 <%= progress %>% completed</p>
+
+      <div class="w-full bg-gray-200 rounded-full h-2 mt-1 mb-2">
+        <div class="bg-blue-500 h-2 rounded-full" style="width: <%= progress %>%"></div>
+      </div>
+    <% end %>
+
+    <% if book.status == "read" %>
+      <span class="text-green-600 font-semibold">✅ Completed</span>
+    <% else %>
+      <span class="text-yellow-600 font-semibold">⏳ In Progress</span>
+    <% end %>
+
+    <p class="text-sm text-gray-600">
+      <strong>Tags:</strong>
+      <% book.tags.each do |tag| %>
+        <span class="inline-block bg-blue-100 text-blue-800 px-2 py-1 rounded-full text-xs font-semibold mr-1">
+          <%= tag.name.titleize %>
+        </span>
+      <% end %>
+    </p>
+  </div>
+
+  <div class="mt-4 flex justify-between items-center text-sm text-gray-500">
+    <%= link_to "Show", book, class: "hover:underline" %>
+    <% if authenticated? %>
+      <%= link_to "Edit", edit_book_path(book), class: "hover:underline" %>
+    <% end %>
+  </div>
+</div>

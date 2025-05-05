@@ -3,6 +3,8 @@ class Book < ApplicationRecord
   validates :status, presence: true
   has_one_attached :cover_image
   belongs_to :user
+  has_many :book_tags
+  has_many :tags, through: :book_tags
   
   STATUS_OPTIONS = [
     ["To Read", "to read"],

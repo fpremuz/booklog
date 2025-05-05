@@ -55,8 +55,8 @@
     </div>
 
     <div class="mb-4">
-      <%= form.label :tags, "Tags (comma-separated)", class: "block font-semibold mb-1" %>
-      <%= form.text_field :tags, class: "w-full border border-gray-300 rounded p-2" %>
+      <%= label_tag :tag_names, "Tags (comma-separated)" %>
+      <%= text_field_tag :tag_names, @book.tags.map(&:name).join(", "), class: "w-full px-3 py-2 border rounded shadow focus:outline-none focus:ring", placeholder: "e.g. self-help, productivity" %>
     </div>
 
     <%= form.label :cover_image, "Cover Image", class: "block text-sm font-medium text-gray-700" %> 
