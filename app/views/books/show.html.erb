@@ -30,7 +30,7 @@
 
     <p class="mb-4">
       <strong>Reading Progress:</strong><br>
-      <% if @book.total_pages.present? && @book.pages_read.present? && book.total_pages > 0 %>
+      <% if @book.total_pages.present? && @book.pages_read.present? && @book.total_pages > 0 %>
         <%= @book.pages_read %> / <%= @book.total_pages %> pages
         (<%= number_to_percentage((@book.pages_read.to_f / @book.total_pages * 100), precision: 0) %>)
       <% else %>
