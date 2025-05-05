@@ -54,6 +54,11 @@
       <%= form.text_area :reading_notes, rows: 4, class: "border rounded w-full px-4 py-2" %>
     </div>
 
+    <div class="mb-4">
+      <%= form.label :tags, "Tags (comma-separated)", class: "block font-semibold mb-1" %>
+      <%= form.text_field :tags, class: "w-full border border-gray-300 rounded p-2" %>
+    </div>
+
     <%= form.label :cover_image, "Cover Image", class: "block text-sm font-medium text-gray-700" %> 
     <%= form.file_field :cover_image, class: "mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-gray-50 focus:outline-none", accept: "image/*" %>
     

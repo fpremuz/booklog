@@ -35,6 +35,13 @@
         class: "border px-2 py-1 rounded w-40" %>
     </div>
 
+    <div>
+      <%= label_tag :tag, "Filter by Tag", class: "block mb-1" %>
+      <%= form_with url: books_path, method: :get, local: true do |f| %>
+        <%= f.text_field :tag, class: "border rounded px-2 py-1 mr-2" %>
+      <% end %>
+    </div>
+
     <div class="flex gap-2 items-end">
       <%= submit_tag "Search", class: "inline-flex items-center justify-center bg-blue-500 text-white px-3 py-1 rounded h-[38px]" %>
       <%= link_to "Reset Filters", books_path, class: "inline-flex items-center justify-center bg-gray-400 text-black px-3 py-1 rounded h-[38px]" %>
@@ -113,6 +120,10 @@
           <span class="text-green-600 font-semibold">✅ Completed</span>
         <% else %>
           <span class="text-yellow-600 font-semibold">⏳ In Progress</span>
+        <% end %>
+
+        <% if book.tags.present? %>
+          <p class="text-xs text-gray-600 mb-1">Tags: <%= book.tags %></p>
         <% end %>
       </div>
 

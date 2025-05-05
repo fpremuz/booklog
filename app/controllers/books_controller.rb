@@ -23,6 +23,10 @@ class BooksController < ApplicationController
       if params[:rating_filter].present?
         @books = @books.where("rating >= ?", params[:rating_filter].to_i)
       end
+
+      if params[:tag].present?
+        @books = @books.where("tags ILIKE ?", "%#{params[:tag]}%")
+      end
     else
       @books = Book.none
     end
