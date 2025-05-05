@@ -13,8 +13,12 @@
     <%= link_to "Reset", books_path, class: "bg-gray-300 text-black px-4 py-2 rounded" %>
   </div>
 
-  <% if params[:query].blank? && params[:status].blank? && params[:tags].blank? %>
+  <% if @books.empty? %>
+    <p class="text-gray-600 mt-2">No books found.</p>
+  <% elsif params[:query].blank? && params[:status].blank? && params[:tags_list].blank? && params[:rating].blank? && params[:rating_filter].blank? %>
     <p class="text-gray-600 mt-2">Showing all books</p>
+  <% else %>
+    <p class="text-gray-600 mt-2">Filtered results</p>
   <% end %>
 
   <div class="flex gap-4">

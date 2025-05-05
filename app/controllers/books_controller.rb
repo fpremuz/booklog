@@ -8,27 +8,12 @@ class BooksController < ApplicationController
       @books = Current.session.user.books
       @books = Book.page(params[:page]).per(3)
   
-      if params[:query].present?
-        q = "%#{params[:query]}%"
-        @books = @books.where("title ILIKE ? OR description ILIKE ?", q, q)
-      end
-  
-      if params[:status].present?
-        @books = @books.where(status: params[:status])
-      end
-  
-      if params[:rating].present?
-        @books = @books.where(rating: params[:rating])
-      end
-  
-      if params[:rating_filter].present?
-        @books = @books.where("rating >= ?", params[:rating_filter].to_i)
-      end
-  
-      if params[:tags_list].present?
-        tag_names = params[:tags_list]
-        @books = @books.joins(:tags).where("tags.name ILIKE ANY (ARRAY[?])", tag_names.map { |tag| "%#{tag}%" }).distinct
-      end
+      @books = @books.search(params[:query]) if params[:query].present?
+      @books = @books.with_status(params[:status]) if params[:status].present?
+      @books = @books.with_rating(params[:rating]) if params[:rating].present?
+      @books = @books.rating_above(params[:rating_filter]) if params[:rating_filter].present?
+      @books = @books.with_tags(params[:tags_list]) if params[:tags_list].present?
+      @books = @books.page(params[:page]).per(3)
     else
       @books = Book.none
     end
