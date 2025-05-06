@@ -1,0 +1,20 @@
+<h1 class="text-2xl font-bold mb-4">Your Book Analytics</h1>
+
+<div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
+  <div class="p-4 bg-white shadow rounded">
+    <h2 class="text-sm text-gray-600">Books Read This Year</h2>
+    <p class="text-2xl font-bold"><%= @books_read_this_year %></p>
+  </div>
+  <div class="p-4 bg-white shadow rounded">
+    <h2 class="text-sm text-gray-600">Currently Reading</h2>
+    <p class="text-2xl font-bold"><%= @currently_reading %></p>
+  </div>
+  <div class="p-4 bg-white shadow rounded">
+    <h2 class="text-sm text-gray-600">Average Rating</h2>
+    <p class="text-2xl font-bold"><%= @average_rating %></p>
+  </div>
+  <div class="p-4 bg-white shadow rounded">
+    <h2 class="text-sm text-gray-600">Total Pages Read</h2>
+    <p class="text-2xl font-bold"><%= @total_pages_read %></p>
+  </div>
+</div>

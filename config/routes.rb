@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  get "analytics", to: "analytics#index"
   get "pages/home"
   get "users/new"
   get "users/create"
