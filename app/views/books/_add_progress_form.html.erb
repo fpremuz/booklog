@@ -1,0 +1,7 @@
+<%= form_with model: book, url: update_progress_book_path(book), method: :patch, local: true do |f| %>
+  <div class="mb-2">
+    <%= f.label :pages_read, "Add Progress", class: "block text-sm font-medium" %>
+    <%= f.number_field :pages_read, value: book.pages_read, min: 0, max: book.total_pages, class: "w-full border rounded p-2" %>
+  </div>
+  <%= f.submit "Update Progress", class: "bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600" %>
+<% end %>

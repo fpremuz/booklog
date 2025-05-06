@@ -1,43 +1,49 @@
-<div class="flex justify-between items-center mb-8">
-  <h1 class="text-3xl font-bold">Books</h1>
-  <% if authenticated? %>
-    <%= link_to "New Book", new_book_path, class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" %>
+<%= form_with url: books_path, method: :get, local: true do %>
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold">Books</h1>
+    <% if authenticated? %>
+      <%= link_to "New Book", new_book_path, class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" %>
+    <% end %>
+  </div>
+
+  <%= render partial: "book_filters" %>
+
+  <div class="mb-6 flex gap-2">
+    <%= submit_tag "Apply Filters", class: "bg-blue-500 text-white px-4 py-2 rounded cursor-pointer" %>
+    <%= link_to "Reset", books_path, class: "bg-gray-300 text-black px-4 py-2 rounded" %>
+  </div>
+
+  <% if @books.empty? %>
+    <p class="text-gray-600 mt-2">No books found.</p>
+  <% elsif params[:query].blank? && params[:status].blank? && params[:tags_list].blank? && params[:rating].blank? && params[:rating_filter].blank? %>
+    <p class="text-gray-600 mt-2">Showing all books</p>
+  <% else %>
+    <p class="text-gray-600 mt-2">Filtered results</p>
   <% end %>
-</div>
 
-<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-  <% @books.each do |book| %>
-    <div class="bg-white p-6 rounded-lg shadow-md flex flex-col justify-between h-full">
-      <div>
-        <% if book.cover_image.attached? %>
-          <%= image_tag book.cover_image, class: "rounded shadow-md mt-2" %>
-        <% else %>
-          <div class="mb-4 bg-gray-100 text-gray-500 italic text-center py-12 rounded">
-            No image
-          </div>
-        <% end %>
-
-        <h2 class="text-xl font-bold mb-2"><%= book.title %></h2>
-
-        <% if book.description.present? %>
-          <p class="text-gray-600 text-sm mb-4"><%= truncate(book.description, length: 100) %></p>
-        <% end %>
-
-        <p class="text-sm text-gray-500 italic mb-2">
-          <% if book.status.present? %>
-            Status: <%= book.status.titleize %>
-          <% else %>
-            Status: Not set
-          <% end %>
-        </p>
-      </div>
-
-      <div class="mt-4 flex justify-between items-center text-sm text-gray-500">
-        <%= link_to "Show", book, class: "hover:underline" %>
-        <% if authenticated? %>
-          <%= link_to "Edit", edit_book_path(book), class: "hover:underline" %>
+  <div class="flex gap-4">
+    <div class="w-[80%]">
+      <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        <% @books.each do |book| %>
+          <%= render partial: "book_card", locals: { book: book } %>
         <% end %>
       </div>
     </div>
-  <% end %>
+
+    <aside class="w-[20%] sticky top-4 self-start bg-white p-4 border rounded">
+      <h3 class="font-bold text-lg mb-4">Filter by Tag</h3>
+      <div class="flex flex-col gap-2">
+        <% Tag.order(:name).each do |tag| %>
+          <label class="flex items-center gap-2">
+            <%= check_box_tag "tags_list[]", tag.name, params[:tags_list]&.include?(tag.name) %>
+            <span class="text-sm"><%= tag.name.titleize %></span>
+          </label>
+        <% end %>
+      </div>
+    </aside>
+  </div>
+<% end %>
+
+<div class="pagination">
+  <%= paginate @books %>
 </div>

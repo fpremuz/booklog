@@ -3,12 +3,81 @@
     <h1 class="text-3xl font-bold mb-4 text-center"><%= @book.title %></h1>
 
     <p class="mb-4">
+      <strong>Author:</strong><br>
+      <%= @book.author.presence || "No author provided." %>
+    </p>
+
+    <p class="mb-4">
       <strong>Description:</strong><br>
       <%= @book.description.presence || "No description provided." %>
     </p>
 
     <p class="mb-4">
       <strong>Status:</strong> <%= @book.status&.titleize || "Not set" %>
+    </p>
+
+    <% if @book.finish_date.present? %>
+      <p class="text-green-700 font-semibold mb-2">✅ Completed on <%= @book.finish_date.strftime("%B %-d, %Y") %></p>
+    <% end %>
+
+    <p class="mb-4">
+      <strong>Rating:</strong>
+      <% if @book.rating.present? %>
+        <% 1.upto(5) do |star| %>
+          <span class="text-yellow-400 text-xl">
+            <%= star <= @book.rating ? "★" : "☆" %>
+          </span>
+        <% end %>
+      <% else %>
+        <span class="text-gray-500 italic">Not rated</span>
+      <% end %>
+    </p>
+
+    <p class="mb-4">
+      <strong>Reading Progress:</strong><br>
+      <% if @book.total_pages.present? && @book.pages_read.present? && @book.total_pages > 0 %>
+        <%= @book.pages_read %> / <%= @book.total_pages %> pages
+        (<%= number_to_percentage((@book.pages_read.to_f / @book.total_pages * 100), precision: 0) %>)
+      <% else %>
+        No progress data available.
+      <% end %>
+    </p>
+
+    <% if @book.pages_read.present? && @book.total_pages.present? && @book.total_pages > 0 %>
+      <% percent = (@book.pages_read.to_f / @book.total_pages * 100).round %>
+      <div class="w-full bg-gray-200 rounded h-4 mt-2 mb-4 overflow-hidden">
+        <div class="bg-blue-500 h-full text-xs text-white text-center" style="width: <%= percent %>%;">
+          <%= "#{percent}%" if percent >= 10 %>
+        </div>
+      </div>
+    <% end %>
+
+    <% if @book.start_date.present? %>
+      <p><strong>Started on:</strong> <%= @book.start_date.strftime("%B %d, %Y") %></p>
+    <% end %>
+
+    <% if @book.finish_date.present? %>
+      <p><strong>Finished on:</strong> <%= @book.finish_date.strftime("%B %d, %Y") %></p>
+    <% end %>
+
+    <% if @book.reading_notes.present? %>
+      <p class="mt-4">
+        <strong>Notes:</strong><br>
+        <%= simple_format(@book.reading_notes) %>
+      </p>
+    <% end %>
+
+    <% if @book.status == "read" %>
+      <span class="text-green-600 font-semibold">✅ Completed</span>
+    <% elsif authenticated? %>
+      <%= render "add_progress_form", book: @book %>
+    <% end %>
+
+    <p class="text-sm text-gray-600">
+      <strong>Tags:</strong>
+      <% @book.tags.each do |tag| %>
+        <%= link_to tag.name.titleize, books_path(tag: tag.name), class: "text-blue-600 hover:underline mr-2" %>
+      <% end %>
     </p>
 
     <% if @book.cover_image.attached? %>

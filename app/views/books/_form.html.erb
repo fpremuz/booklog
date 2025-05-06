@@ -2,19 +2,71 @@
   <div class="space-y-2">
     <%= form.label :title, class: "block text-sm font-medium text-gray-700" %>
     <%= form.text_field :title, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+
     <% @book.errors[:title].each do |message| %>
       <p class="text-red-600 text-sm mt-1"><%= message %></p>
     <% end %>
+
+    <div class="field">
+      <%= form.label :author, class: "block text-sm font-medium text-gray-700" %>
+      <%= form.text_field :author, class: "mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-500 focus:ring-indigo-500 sm:text-sm" %>
+    </div>
+
     <%= form.label :description, "Description", class: "block text-sm font-medium text-gray-700"%>
     <%= form.text_area :description, rows: 4, class: "mt-1 p-2 block w-full border border-gray-300 rounded-md shadow-sm focus:ring focus:ring-blue-200" %>
+
     <%= form.label :status, "Status", class: "block text-sm font-medium text-gray-700" %>
     <%= form.select :status, 
         options_for_select(Book::STATUS_OPTIONS, @book.status), 
         { prompt: "Select a status" }, 
         class: "w-full border border-gray-300 rounded px-4 py-2"
     %>
+
+    <%= form.label :rating, "Rating (1 to 5)" %>
+    <div data-controller="rating">
+      <div class="star-rating flex items-center space-x-1">
+        <% 1.upto(5) do |star| %>
+          <%= form.radio_button :rating, star, id: "rating_#{star}", class: "hidden" %>
+          <span data-rating-target="star" data-action="click->rating#select" data-value="<%= star %>" class="star text-2xl cursor-pointer text-yellow-400">
+            <%= star <= (@book.rating || 0) ? "★" : "☆" %>
+          </span>
+        <% end %>
+      </div>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :start_date, "Start Date" %>
+      <%= form.date_field :start_date, class: "border rounded w-full px-4 py-2" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :finish_date, "Finish Date" %>
+      <%= form.date_field :finish_date, class: "border rounded w-full px-4 py-2" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :pages_read, "Pages Read" %>
+      <%= form.number_field :pages_read, class: "border rounded w-full px-4 py-2" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :total_pages, "Total Pages" %>
+      <%= form.number_field :total_pages, class: "border rounded w-full px-4 py-2" %>
+    </div>
+
+    <div class="mb-4">
+      <%= form.label :reading_notes, "Reading Notes" %>
+      <%= form.text_area :reading_notes, rows: 4, class: "border rounded w-full px-4 py-2" %>
+    </div>
+
+    <div class="mb-4">
+      <%= label_tag :tag_names, "Tags (comma-separated)" %>
+      <%= text_field_tag :tag_names, @book.tags.map(&:name).join(", "), class: "w-full px-3 py-2 border rounded shadow focus:outline-none focus:ring", placeholder: "e.g. self-help, productivity" %>
+    </div>
+
     <%= form.label :cover_image, "Cover Image", class: "block text-sm font-medium text-gray-700" %> 
     <%= form.file_field :cover_image, class: "mt-1 block w-full text-sm text-gray-900 border border-gray-300 rounded-md cursor-pointer bg-gray-50 focus:outline-none", accept: "image/*" %>
+    
     <% @book.errors[:status].each do |message| %>
       <p class="text-red-600 text-sm mt-1"><%= message %></p>
     <% end %>
