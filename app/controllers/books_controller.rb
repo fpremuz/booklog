@@ -112,6 +112,27 @@ class BooksController < ApplicationController
     end
   end
 
+  def export_pdf
+    @books = Book.all
+
+    pdf = Prawn::Document.new
+    pdf.text "My Book List", size: 24, style: :bold, align: :center
+    pdf.move_down 20
+
+    @books.each do |book|
+      pdf.text book.title, size: 16, style: :bold
+      pdf.text "Author: #{book.author}" if book.author.present?
+      pdf.text "Status: #{book.status.titleize}" if book.status.present?
+      pdf.text "Description: #{book.description.truncate(100)}", size: 10 if book.description.present?
+      pdf.move_down 10
+    end
+
+    send_data pdf.render,
+              filename: "booklog.pdf",
+              type: "application/pdf",
+              disposition: "inline"
+  end
+
   private
     def set_book
       @book = Book.find(params[:id])

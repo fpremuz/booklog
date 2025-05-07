@@ -2,7 +2,10 @@
   <div class="flex justify-between items-center mb-8">
     <h1 class="text-3xl font-bold">Books</h1>
     <% if authenticated? %>
-      <%= link_to "New Book", new_book_path, class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" %>
+      <div class="flex gap-2">
+        <%= link_to "New Book", new_book_path, class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" %>
+        <%= link_to "Export as PDF", export_pdf_books_path, class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" %>
+      </div>
     <% end %>
   </div>
 

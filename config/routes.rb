@@ -11,6 +11,10 @@ Rails.application.routes.draw do
     member do
       patch :update_progress
     end
+
+    collection do
+      get :export_pdf
+    end
   end
 
   get "/login", to: "sessions#new", as: :login
