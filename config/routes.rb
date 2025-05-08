@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get "tags/index"
+  get "tags/edit"
+  get "tags/update"
+  get "tags/destroy"
   get "analytics", to: "analytics#index"
 
   get "pages/home"
@@ -21,6 +25,7 @@ Rails.application.routes.draw do
   resources :passwords, param: :token
   resources :users, only: [:new, :create, :show, :edit, :update]
   resources :profiles, only: [:show, :edit, :update]
+  resources :tags, only: [:index, :show, :edit, :update, :destroy, :new, :create]
   resources :books do
     member do
       patch :update_progress

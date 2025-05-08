@@ -1,0 +1,18 @@
+<div class="max-w-4xl mx-auto py-8">
+  <h1 class="text-2xl font-bold mb-4">Tag: <%= @tag.name %></h1>
+
+  <h2 class="text-xl font-semibold mb-2">Books with this tag:</h2>
+  <ul class="space-y-2">
+    <% @books.each do |book| %>
+      <li class="border-b pb-2">
+        <%= link_to book.title, book_path(book), class: "text-indigo-600 hover:underline" %>
+        <p class="text-sm text-gray-500"><%= truncate(book.description, length: 100) %></p>
+      </li>
+    <% end %>
+  </ul>
+
+  <div class="mt-6 space-x-4">
+    <%= link_to "Edit Tag", edit_tag_path(@tag), class: "px-4 py-2 bg-yellow-500 text-white rounded hover:bg-yellow-600" %>
+    <%= link_to "Back to Tags", tags_path, class: "px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400" %>
+  </div>
+</div>

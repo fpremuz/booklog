@@ -197,7 +197,7 @@ class BooksController < ApplicationController
 
     def update_tags(book, tag_names)
       tags_list = tag_names.to_s.split(",").map(&:strip).reject(&:blank?).uniq
-      tags = tags_list.map { |name| Tag.find_or_create_by(name: name.downcase) }
+      tags = tags_list.map { |name| Current.session.user.tags.find_or_create_by(name: name.downcase) }
       book.tags = tags
     end
 end

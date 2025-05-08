@@ -1,0 +1,15 @@
+<div class="max-w-lg mx-auto py-8">
+  <h1 class="text-2xl font-bold mb-6">New Tag</h1>
+
+  <%= form_with(model: @tag, class: "space-y-4") do |form| %>
+    <div>
+      <%= form.label :name, class: "block text-sm font-medium text-gray-700" %>
+      <%= form.text_field :name, class: "mt-1 block w-full border border-gray-300 rounded px-3 py-2 shadow-sm focus:ring focus:ring-indigo-200" %>
+    </div>
+
+    <div class="flex space-x-4">
+      <%= form.submit "Create Tag", class: "px-4 py-2 bg-indigo-600 text-white rounded hover:bg-indigo-700" %>
+      <%= link_to "Cancel", tags_path, class: "px-4 py-2 bg-gray-300 text-gray-800 rounded hover:bg-gray-400" %>
+    </div>
+  <% end %>
+</div>

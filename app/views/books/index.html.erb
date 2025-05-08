@@ -38,12 +38,15 @@
     <aside class="w-[20%] sticky top-4 self-start bg-white p-4 border rounded">
       <h3 class="font-bold text-lg mb-4">Filter by Tag</h3>
       <div class="flex flex-col gap-2">
-        <% Tag.order(:name).each do |tag| %>
+        <% current_user.tags.order(:name).each do |tag| %>
           <label class="flex items-center gap-2">
             <%= check_box_tag "tags_list[]", tag.name, params[:tags_list]&.include?(tag.name) %>
             <span class="text-sm"><%= tag.name.titleize %></span>
           </label>
         <% end %>
+      </div>
+      <div class="mt-4">
+        <%= link_to "Manage Tags", tags_path, class: "text-indigo-600 hover:text-indigo-800" %>
       </div>
     </aside>
   </div>
