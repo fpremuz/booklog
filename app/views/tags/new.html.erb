@@ -1,7 +1,18 @@
 <div class="max-w-lg mx-auto py-8">
   <h1 class="text-2xl font-bold mb-6">New Tag</h1>
 
-  <%= form_with(model: @tag, class: "space-y-4") do |form| %>
+  <% if @tag.errors.any? %>
+    <div class="mb-4 p-4 bg-red-100 text-red-800 border border-red-300 rounded">
+      <h2 class="font-bold mb-2">There was a problem creating the tag:</h2>
+      <ul class="list-disc list-inside text-sm">
+        <% @tag.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <%= form_with(model: @tag, class: "space-y-4", data: { turbo: false }) do |form| %>
     <div>
       <%= form.label :name, class: "block text-sm font-medium text-gray-700" %>
       <%= form.text_field :name, class: "mt-1 block w-full border border-gray-300 rounded px-3 py-2 shadow-sm focus:ring focus:ring-indigo-200" %>
