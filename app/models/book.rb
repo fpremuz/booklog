@@ -19,4 +19,9 @@ class Book < ApplicationRecord
     ["Read", "read"],
     ["Wishlist", "wishlist"]
   ]
+
+  def user_tags
+    tags.where(user: user)
+  end
+  
 end
