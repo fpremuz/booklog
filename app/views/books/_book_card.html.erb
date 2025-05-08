@@ -10,6 +10,12 @@
 
     <h2 class="text-xl font-bold mb-2"><%= book.title %></h2>
 
+    <% if book.public? %>
+      <span class="inline-block bg-green-100 text-green-800 text-xs font-semibold px-2 py-1 rounded-full mb-2">🌐 Public</span>
+    <% else %>
+      <span class="inline-block bg-gray-200 text-gray-700 text-xs font-semibold px-2 py-1 rounded-full mb-2">🔒 Private</span>
+    <% end %>
+
     <p class="ext-gray-600 text-sm mb-4"><%= book.author %></p>
 
     <% if book.description.present? %>

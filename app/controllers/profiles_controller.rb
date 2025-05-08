@@ -1,10 +1,10 @@
 class ProfilesController < ApplicationController
   def show
     @user = User.find_by(username: params[:username])
-    if @user.nil?
-      redirect_to root_path, alert: "User not found"
+    if Current.session.user == @user
+      @books = @user.books.order(:title)
     else
-      @books = @user.books.publicly_visible.order(:title)
+      @books = @user.books.where(public: true).order(:title)
     end
   end
 

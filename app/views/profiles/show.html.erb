@@ -14,18 +14,18 @@
     </div>
   </div>
 
-  <% if @user.books.any? %>
-    <h2 class="text-2xl font-semibold text-gray-800 mb-4">Books</h2>
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <% @user.books.each do |book| %>
-        <div class="bg-gray-100 p-4 rounded-lg shadow-sm hover:shadow-md transition duration-200">
-          <h3 class="font-semibold text-lg text-gray-800"><%= book.title %></h3>
-          <p class="text-sm text-gray-600">By <%= book.author %></p>
-          <p class="text-xs text-gray-500 mt-2"><%= book.description.truncate(100) %></p>
-        </div>
-      <% end %>
+  <% @user.books.each do |book| %>
+    <div class="p-4 border rounded-lg mb-4 bg-white shadow">
+      <h3 class="text-lg font-semibold">
+        <%= book.title %>
+        <% if book.public? %>
+          <span class="ml-2 text-green-600 text-sm font-medium">🌐 Public</span>
+        <% else %>
+          <span class="ml-2 text-gray-500 text-sm font-medium">🔒 Private</span>
+        <% end %>
+      </h3>
+      <p class="text-sm text-gray-600">By <%= book.author %></p>
+      <p class="text-xs text-gray-500 mt-2"><%= truncate(book.description, length: 100) %></p>
     </div>
-  <% else %>
-    <p class="text-lg text-gray-600 mt-4">No books added yet.</p>
   <% end %>
 </div>
