@@ -43,9 +43,7 @@
           <% if authenticated? %>
             <p class="text-xs text-green-600">
               Logged in as
-              <a href="/users/<%= Current.session.user.id %>" class="text-gray-600 hover:text-gray-800 underline hover:underline">
-                <%= Current.session.user.email %>
-              </a>
+              <%= link_to Current.session.user.email, profile_path(Current.session.user.username), class: "text-gray-600 hover:text-gray-800 underline hover:underline" %>
             </p>
           <% else %>
             <p class="text-xs text-red-600">Not logged in</p>

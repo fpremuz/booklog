@@ -52,6 +52,11 @@
         <% end %>
       </div>
 
+      <div class="mb-6">
+        <%= form.label :username, class: "block text-gray-700 font-medium" %>
+        <%= form.text_field :username, required: true, class: "w-full mt-1 p-2 border rounded-md shadow-sm focus:ring focus:ring-indigo-200" %>        
+      </div>
+
       <%= form.submit "Sign up", class: "w-full bg-indigo-600 text-white py-2 rounded hover:bg-indigo-700 transition" %>
     <% end %>
 

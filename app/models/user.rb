@@ -6,6 +6,7 @@ class User < ApplicationRecord
   validates :email, presence: true, uniqueness: true, format: { with: URI::MailTo::EMAIL_REGEXP, message: "must be a valid email address" }
   validates :name, length: { maximum: 100 }, allow_blank: true
   validates :bio, length: { maximum: 1000 }, allow_blank: true
+  validates :username, presence: true, uniqueness: true
 
   before_validation :normalize_email
 
