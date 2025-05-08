@@ -1,0 +1,31 @@
+<div class="max-w-4xl mx-auto p-6 bg-white shadow-md rounded-lg mt-8">
+  <h1 class="text-4xl font-semibold text-gray-800 mb-4">
+    <%= @user.username %>'s Bookshelf
+  </h1>
+
+  <div class="flex items-center justify-between mb-6">
+    <div class="text-lg text-gray-600">
+      <p>Email: <span class="font-medium text-gray-800"><%= @user.email %></span></p>
+      <p>Joined: <span class="font-medium text-gray-800"><%= @user.created_at.strftime("%B %d, %Y") %></span></p>
+    </div>
+    <div>
+      <%= link_to 'Edit Profile', edit_profile_path(@user.username), class: "btn btn-primary bg-blue-500 hover:bg-blue-600 text-white py-2 px-4 rounded-lg" %>
+      <%= link_to 'Share this Profile', share_profile_path(@user.username), class: "btn btn-secondary bg-green-500 hover:bg-green-600 text-white py-2 px-4 ml-4 rounded-lg" %>
+    </div>
+  </div>
+
+  <% @user.books.each do |book| %>
+    <div class="p-4 border rounded-lg mb-4 bg-white shadow">
+      <h3 class="text-lg font-semibold">
+        <%= book.title %>
+        <% if book.public? %>
+          <span class="ml-2 text-green-600 text-sm font-medium">🌐 Public</span>
+        <% else %>
+          <span class="ml-2 text-gray-500 text-sm font-medium">🔒 Private</span>
+        <% end %>
+      </h3>
+      <p class="text-sm text-gray-600">By <%= book.author %></p>
+      <p class="text-xs text-gray-500 mt-2"><%= truncate(book.description, length: 100) %></p>
+    </div>
+  <% end %>
+</div>

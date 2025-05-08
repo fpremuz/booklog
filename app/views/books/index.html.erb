@@ -1,16 +1,21 @@
 <%= form_with url: books_path, method: :get, local: true do %>
-  <div class="flex justify-between items-center mb-8">
-    <h1 class="text-3xl font-bold">Books</h1>
-    <% if authenticated? %>
-      <%= link_to "New Book", new_book_path, class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" %>
-    <% end %>
-  </div>
+  <div class="sticky top-0 bg-white z-10 py-4 mb-4 shadow-sm">
+    <div class="flex justify-between items-center mb-8">
+      <h1 class="text-3xl font-bold">Books</h1>
+      <% if authenticated? %>
+        <div class="flex gap-2">
+          <%= link_to "New Book", new_book_path, class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" %>
+          <%= link_to "Export as PDF", export_pdf_books_path, class: "bg-blue-600 hover:bg-blue-700 text-white font-semibold py-2 px-4 rounded" %>
+        </div>
+      <% end %>
+    </div>
 
-  <%= render partial: "book_filters" %>
+    <%= render partial: "book_filters" %>
 
-  <div class="mb-6 flex gap-2">
-    <%= submit_tag "Apply Filters", class: "bg-blue-500 text-white px-4 py-2 rounded cursor-pointer" %>
-    <%= link_to "Reset", books_path, class: "bg-gray-300 text-black px-4 py-2 rounded" %>
+    <div class="mb-6 flex gap-2">
+      <%= submit_tag "Apply Filters", class: "bg-blue-500 text-white px-4 py-2 rounded cursor-pointer" %>
+      <%= link_to "Reset", books_path, class: "bg-gray-300 text-black px-4 py-2 rounded" %>
+    </div>
   </div>
 
   <% if @books.empty? %>

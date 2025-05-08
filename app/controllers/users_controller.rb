@@ -18,10 +18,6 @@ class UsersController < ApplicationController
     end
   end
 
-  def show
-    @user = Current.session.user
-  end
-
   def edit
   end
 
@@ -35,7 +31,7 @@ class UsersController < ApplicationController
 
   private
     def user_params
-      params.require(:user).permit(:email, :password, :password_confirmation)
+      params.require(:user).permit(:email, :password, :password_confirmation, :username)
     end
 
     def set_user

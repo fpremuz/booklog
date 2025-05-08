@@ -2,6 +2,12 @@
   <div class="bg-white p-6 rounded-lg shadow-md">
     <h1 class="text-3xl font-bold mb-4 text-center"><%= @book.title %></h1>
 
+    <% if @book.public? %>
+      <span class="text-green-600 text-sm">🌐 Public</span>
+    <% else %>
+      <span class="text-gray-500 text-sm">🔒 Private</span>
+    <% end %>
+
     <p class="mb-4">
       <strong>Author:</strong><br>
       <%= @book.author.presence || "No author provided." %>

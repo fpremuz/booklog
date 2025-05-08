@@ -1,0 +1,45 @@
+<%= line_chart @books_per_month, library: {
+  plugins: {
+    title: {
+      display: true,
+      text: "Books Read Per Month"
+    }
+  }
+} %>  
+  
+<%= column_chart({
+  "To Read" => Book.where(status: "to_read").count,
+  "Reading" => Book.where(status: "reading").count,
+  "Read" => Book.where(status: "read").count
+}, library: {
+  plugins: {
+    title: {
+      display: true,
+      text: "Books by Reading Status"
+    }
+  }
+}) %>
+
+<%= pie_chart(
+  (1..5).map { |r| [ "#{r} stars", Book.where(rating: r).count ] }.to_h,
+  library: {
+    plugins: {
+      title: {
+        display: true,
+        text: "Ratings Distribution"
+      }
+    }
+  }
+) %>
+
+<%= bar_chart(
+  Book.where(status: "read").limit(5).pluck(:title, :pages_read).to_h,
+  library: {
+    plugins: {
+      title: {
+        display: true,
+        text: "Pages Read by Book (Top 5)"
+      }
+    }
+  }
+) %>
