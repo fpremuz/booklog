@@ -1,0 +1,30 @@
+version: '3.9'
+
+services:
+  db:
+    image: postgres:15
+    environment:
+      POSTGRES_USER: booklog
+      POSTGRES_PASSWORD: mysecretpassword
+      POSTGRES_DB: booklog_development
+    ports:
+      - "5433:5432"
+    volumes:
+      - booklog_data:/var/lib/postgresql/data
+
+  web:
+    build: .
+    command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -b 0.0.0.0"
+    volumes:
+      - .:/rails
+    ports:
+      - "3000:3000"
+    environment:
+      DATABASE_URL: postgres://booklog:mysecretpassword@db:5432/booklog_development
+      SECRET_KEY_BASE: a50ccbce7aea2a22433e471888392a50b733aa65ae85edda6807283278d455d7fd974e12aa72c5293e62c74849369aaffeb326f798bba01e2157d02066f929d6
+      RAILS_MASTER_KEY: ab41feeb0215ece21ea6b12954c5b0bd
+    depends_on:
+      - db
+
+volumes:
+  booklog_data:

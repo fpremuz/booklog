@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: booklog
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: booklog
+  template:
+    metadata:
+      labels:
+        app: booklog
+    spec:
+      containers:
+        - name: booklog
+          image: booklog-app
+          ports:
+            - containerPort: 3000
+
