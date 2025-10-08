@@ -49,3 +49,11 @@
 # Ignore Docker-related files
 /.dockerignore
 /Dockerfile*
+
+log/*
+tmp/*
+node_modules
+.git
+.gitignore
+.DS_Store
+coverage
