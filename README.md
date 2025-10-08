@@ -24,19 +24,82 @@ You can add books with details like title, author, description, rating, and stat
 - TailwindCSS
 - Hotwire (Turbo + Stimulus)
 - Importmap (no Node.js or Webpack required)
+- Docker + Docker Compose for easy setup
 
 ## Getting Started
 
 ### Prerequisites
 
-- Ruby 3.1+
-- Rails 7+
-- PostgreSQL
+You’ll need **Docker** and **Docker Compose** installed on your system.
 
-### Setup
-
-Clone the repository:
-
+Check with:
 ```bash
-git clone https://github.com/your-username/booklog.git
-cd booklog
+docker --version
+docker compose version
+
+If you don’t have them, install from:
+👉 https://docs.docker.com/get-docker/
+
+🐳 Running with Docker
+1️⃣ Clone the repository
+
+  git clone https://github.com/your-username/booklog.git
+  cd booklog
+
+2️⃣ Create a .dockerignore file
+This keeps your Docker images light and clean:
+
+  echo "log/*
+  tmp/*
+  node_modules
+  .git
+  .gitignore
+  .DS_Store
+  coverage" > .dockerignore
+
+3️⃣ Create a .env file (optional)
+This file is only for local development:
+
+  DATABASE_URL=postgres://booklog:mysecretpassword@db:5432/booklog_development
+  SECRET_KEY_BASE=your_secret_key_here
+  RAILS_ENV=production
+
+4️⃣ Docker Compose configuration
+This file should already exist as docker-compose.yml:
+
+  version: '3.9'
+  
+  services:
+    db:
+      image: postgres:15
+      environment:
+        POSTGRES_USER: booklog
+        POSTGRES_PASSWORD: mysecretpassword
+        POSTGRES_DB: booklog_development
+      ports:
+        - "5433:5432"
+      volumes:
+        - booklog_data:/var/lib/postgresql/data
+  
+    web:
+      build: .
+      command: bash -c "rm -f tmp/pids/server.pid && bundle exec rails s -b 0.0.0.0"
+      volumes:
+        - .:/rails
+      ports:
+        - "3000:3000"
+      environment:
+        DATABASE_URL: postgres://booklog:mysecretpassword@db:5432/booklog_development
+        SECRET_KEY_BASE: your_secret_key_here
+        RAILS_MASTER_KEY: your_master_key_here
+      depends_on:
+        - db
+  
+  volumes:
+    booklog_data:
+
+5️⃣ Build and run containers
+  docker compose up --build
+
+The app will be available at:
+👉 http://localhost:3000
